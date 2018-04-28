@@ -9,6 +9,10 @@ use App\Http\Resources\Item as ItemResource;
 
 class ItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +25,19 @@ class ItemController extends Controller
         return ItemResource::collection($items);
     }
 
+    public function home()
+    {
+        return view('home');
+    }
+
+    public function index()
+    {
+        $items = Item::search(request(['result']))
+            ->paginate(20);
+
+        return view('items.index',compact('items'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -29,6 +46,13 @@ class ItemController extends Controller
     public function create()
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $result = $request->txt_search_item;
+
+        return redirect('/items?result='.$result);
     }
 
     /**
