@@ -17,7 +17,8 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->string('item_mat_id');
             $table->string('item_id');
-            $table->string('title')->nullable();
+            $table->text('title')->nullable();
+            $table->text('img_url')->nullable();
             $table->timestamps();
         });
     }

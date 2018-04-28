@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Resources\Item as ItemResource;
 
 class ItemController extends Controller
 {
@@ -12,9 +14,11 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index_api()
     {
-        //
+        $items = Item::paginate(15);
+
+        return ItemResource::collection($items);
     }
 
     /**
