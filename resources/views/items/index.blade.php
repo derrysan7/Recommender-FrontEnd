@@ -34,7 +34,7 @@
                     </div>
                 @endforeach
             </div>
-            {{ $items->links() }}
+            {{ $items->appends($_GET)->links() }}
         </div>
     </div>
 </main>
