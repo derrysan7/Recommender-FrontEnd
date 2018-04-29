@@ -46,9 +46,6 @@
                             <button class="btn btn-sm btn-outline-primary" type="submit" value="4" name="submit_button">4</button>
                             <button class="btn btn-sm btn-outline-primary" type="submit" value="5" name="submit_button">5</button>
                         @endif
-                        
-                        
-                        
                     </form>
                 </div>
             </div>

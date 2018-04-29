@@ -97,7 +97,7 @@ class ItemController extends Controller
 
         $count_rating = \App\Rating::where('item_id',$item->item_id)
                             ->count('user_id');
-        
+
         $user_item_rating = $item->ratings->where('user_id', Auth::user()->user_id)->first();
 
         return view('items.detail',compact('item', 'avg_rating', 'count_rating', 'reccs_complete', 'user_item_rating'));
@@ -156,5 +156,12 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
         //
+    }
+
+    public function my_ratings()
+    {
+        $items = \App\Rating::where('user_id', Auth::user()->user_id)->paginate(20);
+
+        return view('items.my_ratings',compact('items'));
     }
 }
