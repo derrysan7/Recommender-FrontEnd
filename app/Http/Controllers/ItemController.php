@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Resources\Item as ItemResource;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class ItemController extends Controller
 {
@@ -96,8 +97,10 @@ class ItemController extends Controller
 
         $count_rating = \App\Rating::where('item_id',$item->item_id)
                             ->count('user_id');
+        
+        $user_item_rating = $item->ratings->where('user_id', Auth::user()->user_id)->first();
 
-        return view('items.detail',compact('item', 'avg_rating', 'count_rating', 'reccs_complete'));
+        return view('items.detail',compact('item', 'avg_rating', 'count_rating', 'reccs_complete', 'user_item_rating'));
     }
 
     /**
@@ -119,8 +122,29 @@ class ItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Item $item)
-    {
-        //
+    {     
+        if ($request->submit_button == "1")
+        {
+            $item->StoreOrUpdateRating($request, $item, 1);
+        }
+        elseif ($request->submit_button == "2")
+        {
+            $item->StoreOrUpdateRating($request, $item, 2);
+        }
+        elseif ($request->submit_button == "3")
+        {
+            $item->StoreOrUpdateRating($request, $item, 3);
+        }
+        elseif ($request->submit_button == "4")
+        {
+            $item->StoreOrUpdateRating($request, $item, 4);
+        }
+        elseif ($request->submit_button == "5")
+        {
+            $item->StoreOrUpdateRating($request, $item, 5);
+        }
+
+        return redirect('/items/detail/'.$item->id);
     }
 
     /**

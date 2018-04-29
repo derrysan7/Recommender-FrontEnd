@@ -40,6 +40,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/items">All Items</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/items/my_ratings">My Ratings</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

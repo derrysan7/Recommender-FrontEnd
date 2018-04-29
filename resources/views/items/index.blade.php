@@ -13,22 +13,17 @@
                 @foreach($items as $item)
                     <div class="col-md-3">
                         <div class="card mb-3 box-shadow">
-                            <img class="card-img-top" src="{{ $item->img_url }}">
+                            <a href="/items/detail/{{ $item->id }}">
+                                <img class="card-img-top" src="{{ $item->img_url }}">
+                            </a>
                             <div class="card-body">
                                 <p class="card-text">
                                     <a href="/items/detail/{{ $item->id }}">{{ $item->title }}</a><br>
-                                    ItemId:{{ $item->item_id }}<br> 
-                                    MatId:{{ $item->item_mat_id }}
+                                    ItemId&nbsp;:&nbsp;{{ $item->item_id }}<br> 
+                                    MatId&nbsp;:&nbsp;{{ $item->item_mat_id }}<br>
+                                    Rating&nbsp;:&nbsp;{{ number_format($item->ratings->where('item_id',$item->item_id)->avg('rating'), 2) }}
+                                            &nbsp;From&nbsp;{{ $item->ratings->where('item_id',$item->item_id)->count('user_id') }}&nbsp;Users
                                 </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-secondary" type="button">1</button>
-                                        <button class="btn btn-sm btn-outline-secondary" type="button">2</button>
-                                        <button class="btn btn-sm btn-outline-secondary" type="button">3</button>
-                                        <button class="btn btn-sm btn-outline-secondary" type="button">4</button>
-                                        <button class="btn btn-sm btn-outline-secondary" type="button">5</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
