@@ -19,4 +19,5 @@ Auth::routes();
 
 Route::get('/home', 'ItemController@home');
 Route::get('/items', 'ItemController@index');
+Route::get('/items/detail/{item}', 'ItemController@show');
 Route::post('/items/search','ItemController@search');

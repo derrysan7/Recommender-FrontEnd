@@ -6,6 +6,8 @@ use App\Item;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Resources\Item as ItemResource;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -74,7 +76,28 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        $client = new Client(['base_uri' => 'http://10.0.2.2:5000']);
+        $res = $client->request('POST', '/predict_item', ['json' => ['ItemMat' => $item->item_mat_id]]);
+
+        $item_reccs = json_decode($res->getBody());
+
+        $reccs_array = [];
+        foreach($item_reccs as $recc){
+            $reccs_array[] = $recc->item_id;
+        }
+
+        $reccs_array_imploded = implode(',',array_fill(0, count($reccs_array), '?'));
+        $reccs_complete = Item::whereIn('item_id', $reccs_array)
+                        ->orderByRaw("field(item_id,{$reccs_array_imploded})",$reccs_array)
+                        ->paginate(10);
+
+        $avg_rating = \App\Rating::where('item_id',$item->item_id)
+                            ->avg('rating');
+
+        $count_rating = \App\Rating::where('item_id',$item->item_id)
+                            ->count('user_id');
+
+        return view('items.detail',compact('item', 'avg_rating', 'count_rating', 'reccs_complete'));
     }
 
     /**
@@ -85,7 +108,7 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        //
+        
     }
 
     /**
