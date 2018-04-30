@@ -9,6 +9,7 @@ use App\Http\Resources\Item as ItemResource;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Illuminate\Support\Collection;
 
 class ItemController extends Controller
 {
@@ -30,7 +31,38 @@ class ItemController extends Controller
 
     public function home()
     {
-        return view('home');
+        if (\App\Rating::where('user_id', Auth::user()->user_id)->get()->count())
+        {
+            $items_array = \App\Rating::where('user_id', Auth::user()->user_id)->get();
+            $client = new Client(['base_uri' => 'http://10.0.2.2:5000']);
+
+            $data = array(
+                "json" => array()
+            );
+            foreach($items_array as $item)
+            {
+                $data['json'][] = array(
+                    'ItemMat' => (int)$item->item->item_mat_id,
+                    'ItemRating' => (int)$item->rating
+                );
+            }
+
+            $res = $client->request('POST', '/predict_user', $data);
+
+            $item_reccs = json_decode($res->getBody());
+
+            $reccs_array = [];
+            foreach($item_reccs as $recc){
+                $reccs_array[] = $recc->item_id;
+            }
+            $reccs_array_imploded = implode(',',array_fill(0, count($reccs_array), '?'));
+            $items = Item::whereIn('item_id', $reccs_array)
+                            ->orderByRaw("field(item_id,{$reccs_array_imploded})",$reccs_array)
+                            ->paginate(10);
+
+        }
+
+        return view('home', compact('items'));
     }
 
     public function index()
@@ -86,7 +118,6 @@ class ItemController extends Controller
         foreach($item_reccs as $recc){
             $reccs_array[] = $recc->item_id;
         }
-
         $reccs_array_imploded = implode(',',array_fill(0, count($reccs_array), '?'));
         $reccs_complete = Item::whereIn('item_id', $reccs_array)
                         ->orderByRaw("field(item_id,{$reccs_array_imploded})",$reccs_array)

@@ -10,7 +10,7 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row">
-                @foreach($items as $item)
+                @forelse($items as $item)
                     <div class="col-md-3">
                         <div class="card mb-3 box-shadow">
                             <a href="/items/detail/{{ $item->item->id }}">
@@ -62,7 +62,9 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <h4>You haven't rated any Item</h4>
+                @endforelse
             </div>
             {{ $items->links() }}
         </div>

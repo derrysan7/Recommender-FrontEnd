@@ -10,127 +10,35 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="card mb-3 box-shadow">
-                        <img class="card-img-top" src="">
-                        <div class="card-body">
-                            <p class="card-text">
-                                Test Title
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">1</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">2</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">3</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">4</button>
-                                    <button class="btn btn-sm btn-primary" type="button">5</button>
+                @if (isset($items))
+                    @forelse($items as $item)
+                        <div class="col-md-3">
+                            <div class="card mb-3 box-shadow">
+                                <a href="/items/detail/{{ $item->id }}">
+                                    <img class="card-img-top" src="{{ $item->img_url }}">
+                                </a>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <a href="/items/detail/{{ $item->id }}">{{ $item->title }}</a><br>
+                                        ItemId&nbsp;:&nbsp;{{ $item->item_id }}<br> 
+                                        MatId&nbsp;:&nbsp;{{ $item->item_mat_id }}<br>
+                                        Rating&nbsp;:&nbsp;{{ number_format($item->ratings->where('item_id',$item->item_id)->avg('rating'), 2) }}
+                                                &nbsp;From&nbsp;{{ $item->ratings->where('item_id',$item->item_id)->count('user_id') }}&nbsp;Users
+                                    </p>
                                 </div>
                             </div>
-                            <small class="text-muted">9 mins</small>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card mb-3 box-shadow">
-                        <img class="card-img-top" src="">
-                        <div class="card-body">
-                            <p class="card-text">
-                                Test Title
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">1</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">2</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">3</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">4</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">5</button>
-                                </div>
-                            </div>
-                            <small class="text-muted">9 mins</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card mb-3 box-shadow">
-                        <img class="card-img-top" src="">
-                        <div class="card-body">
-                            <p class="card-text">
-                                Test Title
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">1</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">2</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">3</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">4</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">5</button>
-                                </div>
-                            </div>
-                            <small class="text-muted">9 mins</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card mb-3 box-shadow">
-                        <img class="card-img-top" src="">
-                        <div class="card-body">
-                            <p class="card-text">
-                                Test Title
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">1</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">2</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">3</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">4</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">5</button>
-                                </div>
-                            </div>
-                            <small class="text-muted">9 mins</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card mb-3 box-shadow">
-                        <img class="card-img-top" src="">
-                        <div class="card-body">
-                            <p class="card-text">
-                                Test Title
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">1</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">2</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">3</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">4</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">5</button>
-                                </div>
-                            </div>
-                            <small class="text-muted">9 mins</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card mb-3 box-shadow">
-                        <img class="card-img-top" src="">
-                        <div class="card-body">
-                            <p class="card-text">
-                                Test Title
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">1</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">2</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">3</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">4</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">5</button>
-                                </div>
-                            </div>
-                            <small class="text-muted">9 mins</small>
-                        </div>
-                    </div>
-                </div>
+                    @empty
+                        <h4>Rate Item to get Recommendation</h4>
+                    @endforelse
+
+                @else
+                    <h4>Rate Item to get Recommendation</h4>
+                @endif
             </div>
+            @if (isset($items))
+                {{ $items->links() }}
+            @endif
         </div>
     </div>
 </main>
