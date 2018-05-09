@@ -52,13 +52,26 @@ class ItemController extends Controller
             $item_reccs = json_decode($res->getBody());
 
             $reccs_array = [];
-            foreach($item_reccs as $recc){
+            foreach ($item_reccs as $recc) 
+            {
                 $reccs_array[] = $recc->item_id;
             }
+
             $reccs_array_imploded = implode(',',array_fill(0, count($reccs_array), '?'));
             $items = Item::whereIn('item_id', $reccs_array)
+                            ->where('title','!=','')
                             ->orderByRaw("field(item_id,{$reccs_array_imploded})",$reccs_array)
-                            ->paginate(10);
+                            ->paginate(12);
+            // $items = Item::where('title','!=','')
+            //                 ->paginate(12);
+
+            // foreach ($items as $key => $item) 
+            // {
+            //     if ($item->title == "")
+            //     {
+            //         $items->forget($key);
+            //     }
+            // }
 
         }
 
@@ -120,8 +133,9 @@ class ItemController extends Controller
         }
         $reccs_array_imploded = implode(',',array_fill(0, count($reccs_array), '?'));
         $reccs_complete = Item::whereIn('item_id', $reccs_array)
+                        ->where('title','!=','')
                         ->orderByRaw("field(item_id,{$reccs_array_imploded})",$reccs_array)
-                        ->paginate(10);
+                        ->paginate(12);
 
         $avg_rating = \App\Rating::where('item_id',$item->item_id)
                             ->avg('rating');
