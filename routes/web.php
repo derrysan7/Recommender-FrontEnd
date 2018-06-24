@@ -23,3 +23,4 @@ Route::get('/items/detail/{item}', 'ItemController@show');
 Route::patch('/items/update/{item}', 'ItemController@update');
 Route::post('/items/search','ItemController@search');
 Route::get('/items/my_ratings', 'ItemController@my_ratings');
+Route::delete('/items/my_ratings/{item}','ItemController@destroy');

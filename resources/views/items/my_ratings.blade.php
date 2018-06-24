@@ -57,8 +57,12 @@
                                         </form>
                                     </div>
                                 </div>
-
                                 <br>
+                                 <form method="POST" action="/items/my_ratings/{{ $item->item->id }}">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -200,7 +200,10 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //
+        $my_rating = \App\Rating::where('user_id', Auth::user()->user_id)
+                                    ->where('item_id', $item->item_id)
+                                    ->delete();
+        return redirect('/items/my_ratings');
     }
 
     public function my_ratings()

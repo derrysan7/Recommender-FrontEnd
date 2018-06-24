@@ -49,7 +49,7 @@
                     <ul class="navbar-nav ml-auto">
                         <form class="form-inline" method="POST" action="/items/search">
                             {{ csrf_field() }}
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="txt_search_item">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="txt_search_item" autocomplete="off">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
                         <!-- Authentication Links -->
