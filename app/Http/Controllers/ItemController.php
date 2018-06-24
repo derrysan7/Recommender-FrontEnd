@@ -189,7 +189,8 @@ class ItemController extends Controller
             $item->StoreOrUpdateRating($request, $item, 5);
         }
 
-        return redirect('/items/detail/'.$item->id);
+        // return redirect('/items/detail/'.$item->id);
+        return redirect()->back();
     }
 
     /**
